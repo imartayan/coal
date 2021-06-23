@@ -1,2 +1,2 @@
-# consensus-aligner
+# coal
 Pairwise sequence alignment for consensus
