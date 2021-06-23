@@ -9,7 +9,7 @@ ALIGN_VECT := ${BUILD}/align_vect
 
 all: ${ALIGN_STANDARD} ${ALIGN_HASH} ${ALIGN_VECT}
 
-${ALIGN_STANDARD}: align_standard.c nw_diag.c fasta.c ${COMMON}
+${ALIGN_STANDARD}: align_standard.c nw_diag.c ${COMMON}
 	mkdir -p ${BUILD}
 	gcc ${FLAGS} $^ -o $@
 	gcc ${FLAGS} -DTRACEBACK $^ -o $@_tb
