@@ -38,7 +38,10 @@ int align_hash(char *s1, int n1, char *s2, int n2) {
         continue;
       }
       int w = width(l1, l2);
-      score += nw_diag(s1 + i0 + 1, l1, s2 + j0 + 1, l2, w);
+#ifdef BORDERLESS
+      if (i0 >= 0)
+#endif
+        score += nw_diag(s1 + i0 + 1, l1, s2 + j0 + 1, l2, w);
       score += KMER_SIZE * C_SAME;
 #ifdef SHOW_SEQ
       for (int k = 1; k <= KMER_SIZE; k++) {
@@ -64,7 +67,10 @@ int align_hash(char *s1, int n1, char *s2, int n2) {
         continue;
       }
       int w = width(l1, l2);
-      score += nw_diag(s1 + i0 + 1, l1, s2 + j0 + 1, l2, w);
+#ifdef BORDERLESS
+      if (i0 >= 0)
+#endif
+        score += nw_diag(s1 + i0 + 1, l1, s2 + j0 + 1, l2, w);
       score += KMER_SIZE * C_SAME;
 #ifdef SHOW_SEQ
       for (int k = 1; k <= KMER_SIZE; k++) {
@@ -84,12 +90,14 @@ int align_hash(char *s1, int n1, char *s2, int n2) {
       j += 1;
     }
   }
+#ifndef BORDERLESS
   if (i0 < n1 && j0 < n2) {
     int l1 = n1 - 1 - i0;
     int l2 = n2 - 1 - j0;
     int w = width(l1, l2);
     score += nw_diag(s1 + i0 + 1, l1, s2 + j0 + 1, l2, w);
   }
+#endif
   ht_empty(ht1);
   ht_empty(ht2);
   return score;
