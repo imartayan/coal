@@ -13,7 +13,12 @@ score_t nw_diag(char *s1, int l1, char *s2, int l2, int w) {
   score_t diag_odd[(w << 1) + 2];
   memcpy(diag_even, diag_init, ((w << 1) + 2) * sizeof(score_t));
 #ifdef TRACEBACK
-  int8_t traceback[l1 + l2 + 1][(w << 1) + 3];
+  // int8_t traceback[l1 + l2 + 1][(w << 1) + 3];
+  int8_t(*traceback)[(w << 1) + 3] = malloc((l1 + l2 + 1) * ((w << 1) + 3));
+  if (traceback == NULL) {
+    fprintf(stderr, "Traceback allocation failed\n");
+    exit(1);
+  }
 #endif
 
   diag_even[w + 1] = 0;
@@ -97,6 +102,10 @@ score_t nw_diag(char *s1, int l1, char *s2, int l2, int w) {
   char *r1 = malloc(l1 + l2);
   char *r2 = malloc(l1 + l2);
   char *r3 = malloc(l1 + l2);
+  if (r1 == NULL || r2 == NULL || r3 == NULL) {
+    fprintf(stderr, "Array allocation failed\n");
+    exit(1);
+  }
   int start = l1 + l2 - 1;
   r1[start] = '\0';
   r2[start] = '\0';
@@ -140,6 +149,7 @@ score_t nw_diag(char *s1, int l1, char *s2, int l2, int w) {
       break;
     }
   }
+  free(traceback);
 #ifdef SHOW_SEQ
   printf("%s\n%s\n%s\n", r1 + start, r3 + start, r2 + start);
 #endif

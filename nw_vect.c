@@ -32,7 +32,13 @@ score_t nw_vect(char *s1, int l1, char *s2, int l2) {
   __m256i c_sub = _mm256_set1_epi16(C_SUB);
   __m256i c_gap = _mm256_set1_epi16(C_GAP);
 #ifdef TRACEBACK
-  int16_t traceback[l1 + l2 + 1][16]; // size must be the same
+  // int size must be the same (16 bits)
+  // int16_t traceback[l1 + l2 + 1][16];
+  int16_t(*traceback)[16] = malloc((l1 + l2 + 1) * 16 * sizeof(int16_t));
+  if (traceback == NULL) {
+    fprintf(stderr, "Traceback allocation failed\n");
+    exit(1);
+  }
   __m256i t_diag = _mm256_set1_epi16(T_DIAG);
   __m256i t_left = _mm256_set1_epi16(T_LEFT);
   __m256i t_up = _mm256_set1_epi16(T_UP);
@@ -122,7 +128,7 @@ score_t nw_vect(char *s1, int l1, char *s2, int l2) {
 
       v_diag_odd = v_diag;
 #ifdef TRACEBACK
-      memcpy(traceback[d], &v_traceback, 256 >> 3);
+      memcpy(&traceback[d][0], &v_traceback, 256 >> 3);
 #endif
     } else { // even
       j++;
@@ -166,7 +172,7 @@ score_t nw_vect(char *s1, int l1, char *s2, int l2) {
 
       v_diag_even = v_diag;
 #ifdef TRACEBACK
-      memcpy(traceback[d], &v_traceback, 256 >> 3);
+      memcpy(&traceback[d][0], &v_traceback, 256 >> 3);
 #endif
     }
   }
@@ -182,6 +188,10 @@ score_t nw_vect(char *s1, int l1, char *s2, int l2) {
   char *r1 = malloc(l1 + l2);
   char *r2 = malloc(l1 + l2);
   char *r3 = malloc(l1 + l2);
+  if (r1 == NULL || r2 == NULL || r3 == NULL) {
+    fprintf(stderr, "Array allocation failed\n");
+    exit(1);
+  }
   int start = l1 + l2 - 1;
   r1[start] = '\0';
   r2[start] = '\0';
@@ -225,6 +235,7 @@ score_t nw_vect(char *s1, int l1, char *s2, int l2) {
       break;
     }
   }
+  free(traceback);
 #ifdef SHOW_SEQ
   printf("%s\n%s\n%s\n", r1 + start, r3 + start, r2 + start);
 #endif
