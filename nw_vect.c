@@ -65,6 +65,7 @@ score_t nw_vect(char *s1, int l1, char *s2, int l2) {
       v_s2 = _mm256_insert_epi16(v_s2, '2', k);                                \
     }                                                                          \
   }
+  // index of insertion must be a constant, that's why we use a macro here
   INIT_VECT(0)
   INIT_VECT(1)
   INIT_VECT(2)
@@ -124,9 +125,7 @@ score_t nw_vect(char *s1, int l1, char *s2, int l2) {
 #endif
 
       v_diag = _mm256_insert_epi16(v_diag, N_INF, 0);
-      v_diag = _mm256_insert_epi16(v_diag, N_INF, 15);
-
-      v_diag_odd = v_diag;
+      v_diag_odd = _mm256_insert_epi16(v_diag, N_INF, 15);
 #ifdef TRACEBACK
       memcpy(&traceback[d][0], &v_traceback, 256 >> 3);
 #endif
@@ -168,9 +167,7 @@ score_t nw_vect(char *s1, int l1, char *s2, int l2) {
       v_traceback = _mm256_blendv_epi8(v_traceback, t_up, v_cmp);
 #endif
 
-      v_diag = _mm256_insert_epi16(v_diag, N_INF, 0);
-
-      v_diag_even = v_diag;
+      v_diag_even = _mm256_insert_epi16(v_diag, N_INF, 0);
 #ifdef TRACEBACK
       memcpy(&traceback[d][0], &v_traceback, 256 >> 3);
 #endif
