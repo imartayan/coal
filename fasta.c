@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *read_sequence(FILE *fd) {
+char *read_sequence(FILE *fd, long max_len) {
   // read first sequence from file descriptor
-  char *seq = calloc(MAX_SIZE, sizeof(char));
+  char *seq = calloc(max_len, sizeof(char));
   if (seq == NULL) {
     fprintf(stderr, "Allocation failed\n");
     exit(1);
   }
-  int seq_len = 0;
-  while (fgets(seq + seq_len, MAX_SIZE - seq_len, fd)) {
-    int line_len = strlen(seq + seq_len);
+  long seq_len = 0;
+  while (fgets(seq + seq_len, max_len - seq_len, fd)) {
+    long line_len = strlen(seq + seq_len);
     if (line_len == 0) { // empty line
       continue;
     }
@@ -37,7 +37,10 @@ void load_one_seq(char *filename, char **seq) {
     fprintf(stderr, "Invalid filename: %s\n", filename);
     exit(1);
   }
-  *seq = read_sequence(fd);
+  fseek(fd, 0L, SEEK_END);
+  long file_size = ftell(fd);
+  fseek(fd, 0L, SEEK_SET);
+  *seq = read_sequence(fd, file_size + 1);
   fclose(fd);
 }
 
@@ -47,7 +50,10 @@ void load_two_seq(char *filename, char **seq1, char **seq2) {
     fprintf(stderr, "Invalid filename: %s\n", filename);
     exit(1);
   }
-  *seq1 = read_sequence(fd);
-  *seq2 = read_sequence(fd);
+  fseek(fd, 0L, SEEK_END);
+  long file_size = ftell(fd);
+  fseek(fd, 0L, SEEK_SET);
+  *seq1 = read_sequence(fd, file_size + 1);
+  *seq2 = read_sequence(fd, file_size + 1);
   fclose(fd);
 }

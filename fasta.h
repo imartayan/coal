@@ -3,11 +3,7 @@
 
 #include <stdio.h>
 
-#ifndef MAX_SIZE
-#define MAX_SIZE (25000)
-#endif
-
-char *read_sequence(FILE *fd);
+char *read_sequence(FILE *fd, long max_len);
 
 void load_one_seq(char *filename, char **seq);
 void load_two_seq(char *filename, char **seq1, char **seq2);
