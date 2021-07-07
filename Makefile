@@ -4,13 +4,18 @@ FLAGS_AVX := -march=native
 COMMON := fasta.c utils.c
 
 BUILD ?= build
+CUT := ${BUILD}/cut
 ALIGN_STANDARD := ${BUILD}/align_standard
 ALIGN_HASH := ${BUILD}/align_hash
 ALIGN_VECT := ${BUILD}/align_vect
 
 REPEAT := 1000
 
-all: ${ALIGN_STANDARD} ${ALIGN_HASH} ${ALIGN_VECT}
+all: ${CUT} ${ALIGN_STANDARD} ${ALIGN_HASH} ${ALIGN_VECT}
+
+${CUT}: cut.c hash.c fasta.c
+	mkdir -p ${BUILD}
+	${CC} ${FLAGS} $^ -o $@
 
 ${ALIGN_STANDARD}: align_standard.c nw_diag.c ${COMMON}
 	mkdir -p ${BUILD}
