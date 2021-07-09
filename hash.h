@@ -9,17 +9,35 @@
 #endif
 
 #ifndef HASH_SIZE
-#define HASH_SIZE (5)
+#define HASH_SIZE (6)
 #endif
 
 #ifndef GAP_SIZE
 #define GAP_SIZE (20)
 #endif
 
-#define MASK ((1 << ((KMER_SIZE - 1) << 1)) - 1)
+#define MASK ((1ULL << ((KMER_SIZE - 1) << 1)) - 1)
 
-typedef uint16_t hash_t;
+#if KMER_SIZE <= 4
+typedef uint8_t kmer_t;
+#elif KMER_SIZE <= 8
+typedef uint16_t kmer_t;
+#elif KMER_SIZE <= 16
 typedef uint32_t kmer_t;
+#else
+typedef uint64_t kmer_t;
+#endif
+
+#if HASH_SIZE <= 8
+typedef uint8_t hash_t;
+#elif HASH_SIZE <= 16
+typedef uint16_t hash_t;
+#elif HASH_SIZE <= 32
+typedef uint32_t hash_t;
+#else
+typedef uint64_t kmer_t;
+#endif
+
 typedef uint16_t value_t;
 
 typedef struct _list_t list_t;
