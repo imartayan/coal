@@ -14,8 +14,8 @@ void cut(char *s1, int n1, char *s2, int n2, char *out1, char *out2) {
   int i0 = -1;
   int j0 = -1;
   kmer_t mask = MASK;
-  int kmer1 = init_kmer(s1);
-  int kmer2 = init_kmer(s2);
+  kmer_t kmer1 = init_kmer(s1);
+  kmer_t kmer2 = init_kmer(s2);
   int i = KMER_SIZE - 1;
   int j = KMER_SIZE - 1;
   int start1 = 0;

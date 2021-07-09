@@ -17,8 +17,8 @@ int align_vect(char *s1, int n1, char *s2, int n2) {
   int i0 = -1;
   int j0 = -1;
   kmer_t mask = MASK;
-  int kmer1 = init_kmer(s1 + GAP_SIZE);
-  int kmer2 = init_kmer(s2 + GAP_SIZE);
+  kmer_t kmer1 = init_kmer(s1 + GAP_SIZE);
+  kmer_t kmer2 = init_kmer(s2 + GAP_SIZE);
   int i = GAP_SIZE + KMER_SIZE - 1;
   int j = GAP_SIZE + KMER_SIZE - 1;
   while (i < n1 && j < n2) {
