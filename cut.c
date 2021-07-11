@@ -110,7 +110,7 @@ void cut(char *s1, int n1, char *s2, int n2, char *out1, char *out2) {
     }
     fclose(fd);
   } else {
-    fprintf(stderr, "Failed to find two solid kmers");
+    fprintf(stderr, "Failed to find two solid kmers\n");
     exit(1);
   }
 }
