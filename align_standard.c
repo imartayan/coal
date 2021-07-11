@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
   }
   int l1 = strlen(seq1);
   int l2 = strlen(seq2);
-  int w = width_large(l1, l2);
+  int w = width(l1, l2);
   int score = 0;
 #ifdef REPEAT
   for (int r = 0; r < REPEAT; r++)
