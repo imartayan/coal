@@ -1,7 +1,7 @@
 #include "fasta.h"
 #include "hash.h"
 #include "nw.h"
-#include "utils.h"
+#include "width.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

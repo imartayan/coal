@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "width.h"
 #include <stdlib.h>
 
 int width(int l1, int l2) {
