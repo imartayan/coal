@@ -9,7 +9,7 @@
 #endif
 
 #ifndef HASH_SIZE
-#define HASH_SIZE (6)
+#define HASH_SIZE (10)
 #endif
 
 #ifndef GAP_SIZE
