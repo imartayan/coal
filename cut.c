@@ -24,8 +24,16 @@ void cut(char *s1, int n1, char *s2, int n2, char *out1, char *out2) {
   while (i < n1 && j < n2) {
     kmer1 = ((kmer1 & mask) << 2) + code(s1[i]);
     kmer2 = ((kmer2 & mask) << 2) + code(s2[j]);
-    ht_add(ht1, kmer1, i);
-    ht_add(ht2, kmer2, j);
+    if (!ht_contains(ht1, kmer1)) {
+      ht_add(ht1, kmer1, i);
+    } else {
+      ht_remove(ht1, kmer1);
+    }
+    if (!ht_contains(ht2, kmer2)) {
+      ht_add(ht2, kmer2, j);
+    } else {
+      ht_remove(ht2, kmer2);
+    }
 
     if (ht_contains(ht1, kmer2)) {
       hash_t h = hash(kmer2);

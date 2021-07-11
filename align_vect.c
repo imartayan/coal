@@ -24,8 +24,16 @@ int align_vect(char *s1, int n1, char *s2, int n2) {
   while (i < n1 && j < n2) {
     kmer1 = ((kmer1 & mask) << 2) + code(s1[i]);
     kmer2 = ((kmer2 & mask) << 2) + code(s2[j]);
-    ht_add(ht1, kmer1, i);
-    ht_add(ht2, kmer2, j);
+    if (!ht_contains(ht1, kmer1)) {
+      ht_add(ht1, kmer1, i);
+    } else {
+      ht_remove(ht1, kmer1);
+    }
+    if (!ht_contains(ht2, kmer2)) {
+      ht_add(ht2, kmer2, j);
+    } else {
+      ht_remove(ht2, kmer2);
+    }
 
     if (ht_contains(ht1, kmer2)) {
       hash_t h = hash(kmer2);
@@ -39,13 +47,16 @@ int align_vect(char *s1, int n1, char *s2, int n2) {
       }
       int w = width(l1, l2);
 #ifdef BORDERLESS
-      if (i0 >= 0)
+      if (i0 >= 0) {
 #endif
         if (w <= W_SIZE) {
           score += nw_vect(s1 + i0 + 1, l1, s2 + j0 + 1, l2);
         } else {
           score += nw_diag(s1 + i0 + 1, l1, s2 + j0 + 1, l2, w);
         }
+#ifdef BORDERLESS
+      }
+#endif
       score += KMER_SIZE * C_SAME;
 #ifdef SHOW_SEQ
       for (int k = 1; k <= KMER_SIZE; k++) {
@@ -72,13 +83,16 @@ int align_vect(char *s1, int n1, char *s2, int n2) {
       }
       int w = width(l1, l2);
 #ifdef BORDERLESS
-      if (i0 >= 0)
+      if (i0 >= 0) {
 #endif
         if (w <= W_SIZE) {
           score += nw_vect(s1 + i0 + 1, l1, s2 + j0 + 1, l2);
         } else {
           score += nw_diag(s1 + i0 + 1, l1, s2 + j0 + 1, l2, w);
         }
+#ifdef BORDERLESS
+      }
+#endif
       score += KMER_SIZE * C_SAME;
 #ifdef SHOW_SEQ
       for (int k = 1; k <= KMER_SIZE; k++) {
