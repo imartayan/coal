@@ -28,11 +28,11 @@ typedef uint32_t kmer_t;
 typedef uint64_t kmer_t;
 #endif
 
-#if HASH_SIZE <= 8
+#if HASH_SIZE < 8
 typedef uint8_t hash_t;
-#elif HASH_SIZE <= 16
+#elif HASH_SIZE < 16
 typedef uint16_t hash_t;
-#elif HASH_SIZE <= 32
+#elif HASH_SIZE < 32
 typedef uint32_t hash_t;
 #else
 typedef uint64_t kmer_t;
