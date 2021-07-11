@@ -60,16 +60,23 @@ bool ht_contains(list_t **ht, kmer_t kmer) {
 }
 
 void ht_add(list_t **ht, kmer_t kmer, value_t pos) {
-  if (!ht_contains(ht, kmer)) {
+  hash_t h = hash(kmer);
+  list_t *cell = malloc(sizeof(list_t));
+  if (cell == NULL) {
+    fprintf(stderr, "Cell allocation failed\n");
+    exit(1);
+  }
+  cell->kmer = kmer;
+  cell->pos = pos;
+  cell->next = ht[h];
+  ht[h] = cell;
+}
+
+void ht_remove(list_t **ht, kmer_t kmer) {
+  if (ht_contains(ht, kmer)) {
     hash_t h = hash(kmer);
-    list_t *cell = malloc(sizeof(list_t));
-    if (cell == NULL) {
-      fprintf(stderr, "Cell allocation failed\n");
-      exit(1);
-    }
-    cell->kmer = kmer;
-    cell->pos = pos;
-    cell->next = ht[h];
+    list_t *cell = ht[h]->next;
+    free(ht[h]);
     ht[h] = cell;
   }
 }

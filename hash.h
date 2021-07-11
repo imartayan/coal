@@ -55,6 +55,7 @@ hash_t hash(kmer_t k);
 
 bool ht_contains(list_t **ht, kmer_t kmer);
 void ht_add(list_t **ht, kmer_t kmer, value_t pos);
+void ht_remove(list_t **ht, kmer_t kmer);
 void ht_empty(list_t **ht);
 
 #endif /* __HASH_H__ */
