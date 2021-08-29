@@ -10,11 +10,14 @@ COAL_BENCHMARK := ${BUILD}/coal_benchmark
 CUT := ${BUILD}/cut
 REPEAT := 10
 
-.PHONY: all vect benchmark clean
+.PHONY: all vect clean
 
 all: ${COAL_STD} ${COAL} ${CUT}
 
 vect: ${COAL_STD} ${COAL_VECT} ${COAL_BENCHMARK} ${CUT}
+
+clean:
+	$(RM) -r ${BUILD}
 
 COMMON := fasta.c width.c nw.c
 
@@ -42,6 +45,3 @@ ${CUT}: cut.c hash.c fasta.c
 ${COAL}_20: coal.c hash.c nw_diag.c ${COMMON}
 	@ mkdir -p ${BUILD}
 	${CC} ${FLAGS} -DKMER_SIZE=20 -DTRACEBACK -DSHOW_SEQ $^ -o $@
-
-clean:
-	$(RM) -r ${BUILD}
