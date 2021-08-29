@@ -22,12 +22,19 @@ This project has no dependencies, so you just have to use `make` to build the ex
 If your processor supports the [AVX2 instruction set](https://software.intel.com/sites/landingpage/IntrinsicsGuide/), it is recommended to use the vectorized version for better performances : just type `make vect`.
 Also note that you need have `gcc` in order to compile AVX instructions (on macOS make sure that the `CC` variable in the Makefile refers to the actual `gcc` compiler - not `clang`).
 
+If you want to change specific parameters of the algorithm such as the size of kmers, have a look at the Makefile to see the different flags you can set for compilation.
+
 ## Usage
 
 Once coal is built, you just have to run `./coal <seq1.fasta> <seq2.fasta>` to align two sequences.
 The same applies to `coal_vect` and `coal_standard`.
 
 You can find some test sequences in the `examples` directory.
+
+This repository also provides a tool named `cut` which can be used to preprocess a pair of sequences :
+`./cut <seq1.fasta> <seq2.fasta> <out1> <out2>`.
+What `cut` does is that it cuts (sic) the given sequences between their first and their last anchor points.
+This might be useful if the sequences have an important offset.
 
 ## Possible improvements
 
