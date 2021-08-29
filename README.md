@@ -24,7 +24,10 @@ Also note that you need have `gcc` in order to compile AVX instructions (on macO
 
 ## Usage
 
-Once coal is built, you just have to run `coal <seq1.fasta> <seq2.fasta>` to align two sequences.
+Once coal is built, you just have to run `./coal <seq1.fasta> <seq2.fasta>` to align two sequences.
+The same applies to `coal_vect` and `coal_standard`.
+
+You can find some test sequences in the `examples` directory.
 
 ## Possible improvements
 
