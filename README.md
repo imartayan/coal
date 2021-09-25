@@ -20,7 +20,7 @@ It was developed during my internship in the [GenScale team](https://team.inria.
 This project has no dependencies, so you just have to use `make` to build the executables.
 
 If your processor supports the [AVX2 instruction set](https://software.intel.com/sites/landingpage/IntrinsicsGuide/), it is recommended to use the vectorized version for better performances : just type `make vect`.
-Also note that you need have `gcc` in order to compile AVX instructions (on macOS make sure that the `CC` variable in the Makefile refers to the actual `gcc` compiler - not `clang`).
+Also note that you need to have `gcc` in order to compile AVX instructions (on macOS make sure that the `CC` variable in the Makefile refers to the actual `gcc` compiler - not `clang`).
 
 If you want to change specific parameters of the algorithm such as the size of kmers, have a look at the Makefile to see the different flags you can set for compilation.
 
@@ -44,3 +44,7 @@ This might be useful if the sequences have an important offset.
 * improve the hashing method (e.g. by using Robin Hood Hashing or Cuckoo Hashing)
 * extend vectorization for bigger band width (32, 64, or even an arbitrary width)
 * refine the choice of kmers used as anchor points
+
+## License
+
+This project is licensed under the MIT License. Any code contribution intentionally made to the project in this repository must be licensed under the same license.
